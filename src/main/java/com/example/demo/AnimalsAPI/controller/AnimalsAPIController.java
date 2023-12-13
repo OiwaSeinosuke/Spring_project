@@ -22,22 +22,33 @@ public class AnimalsAPIController {
 
 	@GetMapping("animalsSearch")
 	public String animalsSearch(Model model) throws IOException {
+		try {
+			List<AnimalsAPIData> animalsList = animalsAPIService.getAnimalsAPIData();
 
-		List<AnimalsAPIData> animalsList = animalsAPIService.getAnimalsAPIData();
+			model.addAttribute("animalsList", animalsList);
 
-		model.addAttribute("animalsList", animalsList);
+			return "animalsApiSearch.html";
+		}catch (IOException e) {
+	        e.printStackTrace();  
+	        return "error.html"; 
+		}
 
-		return "animalsApiSearch.html";
 	}
 
 	@GetMapping("animalsResult")
 	public String animalDetails(@RequestParam("animalsId") String animalsId, Model model) throws IOException {
+		try {
 
 		List<AnimalsAPIData> hitAnimalsList = animalsAPIService.getSpecificAnimalsAPIData(animalsId);
 
 		model.addAttribute("hitAnimalsList", hitAnimalsList);
 
 		return "animalsApiResult.html";
+		}catch (IOException e) {
+	        e.printStackTrace();  
+	        return "error.html"; 
+		}
+
 
 	}
 
